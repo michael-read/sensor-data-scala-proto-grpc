@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sensor-data-scala-proto-grpc-ingress
+  namespace: sensor-data-scala-proto-grpc
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.protocol: h2c
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sensor-data-scala-proto-grpc-grpc-ingress-service
+                port:
+                  number: 3000
