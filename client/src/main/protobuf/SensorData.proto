@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "sensordata";
+option java_outer_classname = "SensorDataProto";
+
+import "Measurements.proto";
+
+// The SensorData service definition.
+service SensorDataService {
+  // Sends SensorData to the Ingress
+  rpc Provide (SensorData) returns (SensorDataReply) {}
+
+  rpc ProvideStreamed (stream SensorData) returns (stream SensorDataReply) {}
+}
+
+message SensorData {
+  string deviceId            = 1;
+  uint64 timestamp           = 2;
+  Measurements measurements  = 3;
+}
+
+message SensorDataReply {
+  string deviceId            = 1;
+}

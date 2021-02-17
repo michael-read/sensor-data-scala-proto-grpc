@@ -1,0 +1,9 @@
+syntax = "proto3";
+option java_package = "sensordata";
+
+import "Metric.proto";
+
+message InvalidMetric {
+  Metric metric  = 1;
+  string error   = 2;
+}

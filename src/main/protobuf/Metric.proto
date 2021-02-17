@@ -1,0 +1,9 @@
+syntax = "proto3";
+option java_package = "sensordata";
+
+message Metric {
+    string deviceId = 1;
+    int64 timestamp = 2;
+    string name     = 3;
+    double value    = 4;
+}

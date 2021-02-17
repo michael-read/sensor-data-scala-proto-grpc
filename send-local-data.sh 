@@ -1,0 +1,5 @@
+for json in $(cat test-data/one-record-per-line.json)
+do
+  echo "Sending $json"
+  echo $json | grpcurl -plaintext -d @ localhost:3000 SensorDataService/Provide
+done

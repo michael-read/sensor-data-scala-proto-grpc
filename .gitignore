@@ -1,0 +1,7 @@
+*.class
+.bsp
+.idea
+target/
+project/target
+cf-setup/
+lightbend.sbt
