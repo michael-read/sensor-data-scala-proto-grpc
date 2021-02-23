@@ -14,7 +14,7 @@ class ValidMetricLogger extends AkkaStreamlet {
     "log-level",
     "Provide one of the following log levels, debug, info, warning or error",
     "^debug|info|warning|error$",
-    Some("warning")
+    Some("info")
   )
 
   val MsgPrefix = StringConfigParameter("msg-prefix", "Provide a prefix for the log lines", Some("valid-logger"))
