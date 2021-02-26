@@ -1,0 +1,7 @@
+target
+.bsp
+.idea
+.settings
+.classpath
+.project
+my-dockerhub-password.txt
