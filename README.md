@@ -2,18 +2,16 @@
 
 Protobuf end to end
 
-
-
-#grpcurl
+# grpcurl
 https://github.com/fullstorydev/grpcurl
 
-##Listing Services
+## Listing Services
 grpcurl -plaintext localhost:3000 list
 
 SensorDataService
 grpc.reflection.v1alpha.ServerReflection
 
-##Describing Elements
+## Describing Elements
 grpcurl -plaintext localhost:3000 describe SensorDataService
 SensorDataService is a service:
 service SensorDataService {
@@ -21,7 +19,7 @@ rpc Provide ( .SensorData ) returns ( .SensorDataReply );
 rpc ProvideStreamed ( stream .SensorData ) returns ( stream .SensorDataReply );
 }
 
-##Invoking Service
+## Invoking Service
 grpcurl -plaintext -d '{"deviceId":"c75cb448-df0e-4692-8e06-0321b7703992","timestamp":1495545646279,"measurements":{"power":1.7,"rotorSpeed":3.9,"windSpeed":105.9}}' \
 localhost:3000 SensorDataService/Provide
 {
@@ -29,5 +27,6 @@ localhost:3000 SensorDataService/Provide
 "success": true
 }
 
+## Invoking through Traefik Ingress on Microk8s (localhost:8080)
 grpcurl -plaintext -d '{"deviceId":"c75cb448-df0e-4692-8e06-0321b7703992","timestamp":1495545646279,"measurements":{"power":1.7,"rotorSpeed":3.9,"windSpeed":105.9}}' \
 localhost:8080 SensorDataService/Provide

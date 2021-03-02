@@ -29,17 +29,17 @@ helm upgrade cloudflow cloudflow-helm-charts/cloudflow --namespace cloudflow \
 1. docker login to bintray:
    docker login http://lightbend-docker-commercial-registry.bintray.io/ -u <username>
 2. pull down images into your local docker
-docker pull lightbend-docker-commercial-registry.bintray.io/lightbend/cloudflow-enterprise-operator:2.0.23
+docker pull lightbend-docker-commercial-registry.bintray.io/lightbend/cloudflow-enterprise-operator:2.0.24
 docker pull lightbend-docker-commercial-registry.bintray.io/enterprise-suite/es-console:v1.4.10
 docker pull lightbend-docker-commercial-registry.bintray.io/enterprise-suite/console-api:v1.2.6
 docker pull lightbend-docker-commercial-registry.bintray.io/enterprise-suite/es-grafana:v0.5.0
 3. tag images
-docker tag lightbend-docker-commercial-registry.bintray.io/lightbend/cloudflow-enterprise-operator:2.0.23 lightbend/cloudflow-enterprise-operator:2.0.23
+docker tag lightbend-docker-commercial-registry.bintray.io/lightbend/cloudflow-enterprise-operator:2.0.24 lightbend/cloudflow-enterprise-operator:2.0.24
 docker tag lightbend-docker-commercial-registry.bintray.io/enterprise-suite/es-console:v1.4.10 enterprise-suite/es-console:v1.4.10
 docker tag lightbend-docker-commercial-registry.bintray.io/enterprise-suite/console-api:v1.2.6 enterprise-suite/console-api:v1.2.6
 docker tag lightbend-docker-commercial-registry.bintray.io/enterprise-suite/es-grafana:v0.5.0 enterprise-suite/es-grafana:v0.5.0
 4. export images  
-docker save lightbend/cloudflow-enterprise-operator:2.0.23 > enterprise.tar
+docker save lightbend/cloudflow-enterprise-operator:2.0.24 > enterprise.tar
 docker save enterprise-suite/es-console:v1.4.10 > es-console.tar  
 docker save enterprise-suite/console-api:v1.2.6 > console-api.tar
 docker save enterprise-suite/es-grafana:v0.5.0 > es-grafana-tar
@@ -51,7 +51,7 @@ microk8s ctr image import es-grafana-tar
    
 helm install cloudflow-enterprise-components cloudflow-helm-charts/cloudflow-enterprise-components \
 --namespace cloudflow \
---set enterpriseOperator.version=2.0.23 \
+--set enterpriseOperator.version=2.0.24 \
 --set enterpriseOperator.image=lightbend/cloudflow-enterprise-operator \
 --set enterprise-suite.esConsoleImage=enterprise-suite/es-console \
 --set enterprise-suite.esMonitorImage=enterprise-suite/console-api \
@@ -89,3 +89,6 @@ kafkacat -L -b 10.96.53.191:9092 -t metrics
 
 ### consume a "metrics" topic with schema
 kafkacat -C -b 10.96.53.191:9092 -t metrics -q -u -D "" -f %s | java -jar /avro-tools/avro-tools-1.8.2.jar fragtojson --schema-file /schemas/Metric.avsc - | jq .
+
+### Jaeger Port Forward
+kubectl port-forward $(kubectl get pods -l=app="jaeger" -o name) 16686:16686
