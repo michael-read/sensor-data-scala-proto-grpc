@@ -2,7 +2,7 @@
 import sbt._
 import sbt.Keys.{watchSources, _}
 
-version in ThisBuild := "0.1.1"
+version in ThisBuild := "0.1.4"
 
 val credentialFile = new File("lightbend.sbt")
 
@@ -22,7 +22,10 @@ def commercialDependencies : Seq[ModuleID] = {
     Cinnamon.library.cinnamonAkkaStream,
     Cinnamon.library.cinnamonAkkaHttp,
     Cinnamon.library.cinnamonPrometheus,
-    Cinnamon.library.cinnamonPrometheusHttpServer
+    Cinnamon.library.cinnamonPrometheusHttpServer,
+    Cinnamon.library.cinnamonJvmMetricsProducer,
+    Cinnamon.library.cinnamonOpenTracing,
+    Cinnamon.library.cinnamonOpenTracingJaeger
     // END: this requires a commercial Lightbend Subscription
   )
 }

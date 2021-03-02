@@ -18,7 +18,7 @@ https://helm.sh/docs/intro/install/#from-apt-debianubuntu
 
 helm install cloudflow cloudflow-helm-charts/cloudflow --namespace cloudflow \
   --set kafkaClusters.default.bootstrapServers=cloudflow-strimzi-kafka-bootstrap.cloudflow:9092 \
-  --set kafkaClusters.default.replicas=1 --version "2.0.23"
+  --set kafkaClusters.default.replicas=1 --version "2.0.24"
 
 
 helm upgrade cloudflow cloudflow-helm-charts/cloudflow --namespace cloudflow \

@@ -7,6 +7,7 @@ import cloudflow.akkastream.scaladsl._
 import cloudflow.akkastream.util.scaladsl._
 import cloudflow.streamlets._
 import cloudflow.streamlets.proto._
+import com.lightbend.cinnamon.akka.stream.CinnamonAttributes._
 
 class MetricsValidation extends AkkaStreamlet {
   val in = ProtoInlet[Metric]("in")
@@ -22,7 +23,12 @@ class MetricsValidation extends AkkaStreamlet {
   val shape = StreamletShape(in).withOutlets(invalid, valid)
 
   override def createLogic = new RunnableGraphStreamletLogic() {
-    def runnableGraph = sourceWithCommittableContext(in).to(Splitter.sink(flow, invalid, valid)).named("MetricsValidation")
+    def runnableGraph =
+      sourceWithCommittableContext(in)
+        .to(Splitter.sink(flow, invalid, valid))
+        .named("MetricsValidation")
+        .instrumented(name = "MetricsValidation", traceable = true)
+
     def flow =
       FlowWithCommittableContext[Metric]
         .map { metric ⇒

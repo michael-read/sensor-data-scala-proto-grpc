@@ -5,6 +5,8 @@ import cloudflow.akkastream.scaladsl._
 import cloudflow.streamlets._
 import cloudflow.streamlets.proto._
 
+import com.lightbend.cinnamon.akka.stream.CinnamonAttributes._
+
 class ValidMetricLogger extends AkkaStreamlet {
 
   val inlet = ProtoInlet[Metric]("in")
@@ -42,6 +44,10 @@ class ValidMetricLogger extends AkkaStreamlet {
         }
 
     def runnableGraph =
-      sourceWithCommittableContext(inlet).via(flow).to(committableSink).named("ValidMetricLogger")
+      sourceWithCommittableContext(inlet)
+        .via(flow)
+        .to(committableSink)
+        .named("ValidMetricLogger")
+        .instrumented(name = "ValidMetricLogger", traceable = true)
   }
 }
