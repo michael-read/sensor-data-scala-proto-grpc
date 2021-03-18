@@ -4,7 +4,7 @@ import cloudflow.akkastream._
 import cloudflow.akkastream.scaladsl._
 import cloudflow.streamlets._
 import cloudflow.streamlets.proto._
-import com.lightbend.cinnamon.akka.stream.CinnamonAttributes._
+import com.lightbend.cinnamon.akka.stream.CinnamonAttributes
 
 class InvalidMetricLogger extends AkkaStreamlet {
   val inlet = ProtoInlet[InvalidMetric]("in")
@@ -16,12 +16,11 @@ class InvalidMetricLogger extends AkkaStreamlet {
         system.log.warning(s"Invalid metric detected! $invalidMetric")
         invalidMetric
       }
+      .withAttributes(CinnamonAttributes.instrumented(name = "InvalidMetricLogger"))
 
     def runnableGraph =
       sourceWithCommittableContext(inlet)
         .via(flow)
         .to(committableSink)
-        .named("InvalidMetricLogger")
-        .instrumented(name = "InvalidMetricLogger", traceable = true)
   }
 }

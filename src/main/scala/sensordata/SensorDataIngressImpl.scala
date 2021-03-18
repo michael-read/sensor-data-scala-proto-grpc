@@ -3,6 +3,7 @@ package sensordata
 import akka.NotUsed
 import akka.stream.scaladsl.Source
 import cloudflow.akkastream.WritableSinkRef
+import com.lightbend.cinnamon.akka.stream.CinnamonAttributes
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -22,7 +23,6 @@ class SensorDataIngressImpl(outlet: WritableSinkRef[SensorData]) extends SensorD
         case ex: Exception =>
           SensorDataReply(deviceId = in.deviceId, success = false, ex.getMessage)
       }
-//    Future.successful(SensorDataReply(deviceId = in.deviceId, success = true))
 
   /**
    * Sends SensorData to the Ingress as a Stream
@@ -38,12 +38,5 @@ class SensorDataIngressImpl(outlet: WritableSinkRef[SensorData]) extends SensorD
             case ex: Exception =>
               SensorDataReply(deviceId = sensordata.deviceId, success = false, ex.getMessage)
           }
-      }
-      .named("provideStreamed")
-  /*
-      in.map { sensorData =>
-        outlet.write(sensorData) // we're not verifying success
-        SensorDataReply(sensorData.deviceId, success = true)
-      }
- */
+    }
 }

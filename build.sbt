@@ -2,7 +2,7 @@
 import sbt._
 import sbt.Keys.{watchSources, _}
 
-version in ThisBuild := "0.1.4"
+version in ThisBuild := "0.0.14"
 
 val credentialFile = new File("lightbend.sbt")
 

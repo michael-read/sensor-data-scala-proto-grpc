@@ -5,8 +5,6 @@ import cloudflow.akkastream.scaladsl._
 import cloudflow.streamlets.{ RoundRobinPartitioner, StreamletShape }
 import cloudflow.streamlets.proto._
 
-import com.lightbend.cinnamon.akka.stream.CinnamonAttributes._
-
 class SensorDataToMetrics extends AkkaStreamlet {
   val in    = ProtoInlet[SensorData]("in")
   val out   = ProtoOutlet[Metric]("out").withPartitioner(RoundRobinPartitioner)
@@ -24,15 +22,13 @@ class SensorDataToMetrics extends AkkaStreamlet {
           case None =>
             List()
         }
-
       }
+
   override def createLogic = new RunnableGraphStreamletLogic() {
     def runnableGraph =
       sourceWithCommittableContext(in)
         .via(flow)
         .to(committableSink(out))
-        .named("SensorDataToMetrics")
-        .instrumented(name = "SensorDataToMetrics", traceable = true)
 
   }
 }
