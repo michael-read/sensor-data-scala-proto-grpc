@@ -1,29 +1,13 @@
-## Local PersistentVolume
-
-Login to each worker node, and create dir:
-
-* sudo mkdir -p /mnt/disk/vol1
-* sudo chmod 777 /mnt/disk/vol1
-
-update the node names in each file (last line)
-
-* pv1.yaml
-* pv2.yaml
-
-## Install Helm on Master
-
-https://helm.sh/docs/intro/install/#from-apt-debianubuntu
-
 ## single replica in Cloudflow
 
 helm install cloudflow cloudflow-helm-charts/cloudflow --namespace cloudflow \
   --set kafkaClusters.default.bootstrapServers=cloudflow-strimzi-kafka-bootstrap.cloudflow:9092 \
-  --set kafkaClusters.default.replicas=1 --version "2.0.24"
+  --set kafkaClusters.default.replicas=1 --version "2.0.25"
 
 
 helm upgrade cloudflow cloudflow-helm-charts/cloudflow --namespace cloudflow \
   --set kafkaClusters.default.bootstrapServers=cloudflow-strimzi-kafka-bootstrap.cloudflow:9092 \
-  --set kafkaClusters.default.replicas=1 --version "2.0.24"
+  --set kafkaClusters.default.replicas=1 --version "2.0.25"
 
 ## Air Gap install of Akka Data Pipelines Console
 1. docker login to bintray:

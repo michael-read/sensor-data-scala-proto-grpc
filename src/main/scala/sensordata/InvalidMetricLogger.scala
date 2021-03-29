@@ -13,7 +13,7 @@ class InvalidMetricLogger extends AkkaStreamlet {
   override def createLogic = new RunnableGraphStreamletLogic() {
     val flow = FlowWithCommittableContext[InvalidMetric]
       .map { invalidMetric ⇒
-        system.log.warning(s"Invalid metric detected! $invalidMetric")
+        system.log.warning(s"Invalid metric detected!!! $invalidMetric")
         invalidMetric
       }
       .withAttributes(CinnamonAttributes.instrumented(name = "InvalidMetricLogger"))

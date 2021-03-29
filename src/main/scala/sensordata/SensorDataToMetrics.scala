@@ -4,6 +4,7 @@ import cloudflow.akkastream._
 import cloudflow.akkastream.scaladsl._
 import cloudflow.streamlets.{ RoundRobinPartitioner, StreamletShape }
 import cloudflow.streamlets.proto._
+import com.lightbend.cinnamon.akka.stream.CinnamonAttributes
 
 class SensorDataToMetrics extends AkkaStreamlet {
   val in    = ProtoInlet[SensorData]("in")
@@ -23,6 +24,7 @@ class SensorDataToMetrics extends AkkaStreamlet {
             List()
         }
       }
+      .withAttributes(CinnamonAttributes.instrumented(name = "SensorDataToMetrics"))
 
   override def createLogic = new RunnableGraphStreamletLogic() {
     def runnableGraph =

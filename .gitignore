@@ -5,3 +5,4 @@ target/
 project/target
 lightbend.sbt
 my-dockerhub-password.txt
+target-env.sbt

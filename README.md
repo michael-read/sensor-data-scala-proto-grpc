@@ -30,3 +30,5 @@ localhost:3000 SensorDataService/Provide
 ## Invoking through Traefik Ingress on Microk8s (localhost:8080)
 grpcurl -plaintext -d '{"deviceId":"c75cb448-df0e-4692-8e06-0321b7703992","timestamp":1495545646279,"measurements":{"power":1.7,"rotorSpeed":3.9,"windSpeed":105.9}}' \
 localhost:8080 SensorDataService/Provide
+grpcurl -plaintext -d '{"deviceId":"dev1","timestamp":1495545646279,"measurements":{"power":-1.7,"rotorSpeed":3.9,"windSpeed":105.9}}' \
+localhost:3000 SensorDataService/Provide
