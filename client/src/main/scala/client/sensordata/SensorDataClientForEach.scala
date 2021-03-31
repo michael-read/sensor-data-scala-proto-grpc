@@ -36,7 +36,6 @@ object SensorDataClientForEach extends App {
         for (line <- scala.io.Source.fromFile(filename).getLines) {
             cnt = cnt + 1
             replies += singleRequestReply(line, cnt)
-//            singleRequestReply(line, cnt)
         }
     }
     println(s"requests sent ${replies.size}")
@@ -54,7 +53,6 @@ object SensorDataClientForEach extends App {
             case Failure(e) =>
                 println(s"Error ($cnt): $e")
         }
-//        Await.result(reply, Duration(5, SECONDS))
         reply
     }
 
