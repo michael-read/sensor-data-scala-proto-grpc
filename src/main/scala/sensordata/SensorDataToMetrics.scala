@@ -24,6 +24,10 @@ class SensorDataToMetrics extends AkkaStreamlet {
             List()
         }
       }
+      /*
+      Note: if you don't currently have a Lightbend subscription you can optionally comment
+      out the following line referencing CinnamonAttributes and associated import above.
+       */
       .withAttributes(CinnamonAttributes.instrumented(name = "SensorDataToMetrics"))
 
   override def createLogic = new RunnableGraphStreamletLogic() {

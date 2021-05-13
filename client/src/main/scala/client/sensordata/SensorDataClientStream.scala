@@ -46,7 +46,6 @@ object SensorDataClientStream extends App {
                   println(s"transmitting data for device Id ($i): ${j.deviceId}")
                   j
               })
-              .mapMaterializedValue(_ => NotUsed)
 
         val responseStream: Source[SensorDataReply, NotUsed] = client.provideStreamed(requestStream)
         var cnt = 0

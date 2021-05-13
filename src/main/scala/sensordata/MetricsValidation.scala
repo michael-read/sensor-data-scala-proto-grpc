@@ -25,6 +25,11 @@ class MetricsValidation extends AkkaStreamlet {
     def runnableGraph =
       sourceWithCommittableContext(in)
         .to(Splitter.sink(flow, invalid, valid))
+        /*
+              Note: if you don't currently have a Lightbend subscription you can optionally comment
+              out the following line referencing CinnamonAttributes and associated import above.
+         */
+        .withAttributes(CinnamonAttributes.instrumented(name = "MetricsValidation"))
 
     def flow =
       FlowWithCommittableContext[Metric]
@@ -32,6 +37,6 @@ class MetricsValidation extends AkkaStreamlet {
           if (!SensorDataUtils.isValidMetric(metric)) Left(InvalidMetric(Some(metric), "All measurements must be positive numbers!"))
           else Right(metric)
         }
-        .withAttributes(CinnamonAttributes.instrumented(name = "MetricsValidation"))
+
   }
 }

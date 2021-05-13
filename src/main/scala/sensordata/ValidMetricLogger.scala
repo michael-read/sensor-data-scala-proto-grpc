@@ -41,6 +41,10 @@ class ValidMetricLogger extends AkkaStreamlet {
           log(validMetric)
           validMetric
         }
+        /*
+              Note: if you don't currently have a Lightbend subscription you can optionally comment
+              out the following line referencing CinnamonAttributes and associated import above.
+         */
         .withAttributes(CinnamonAttributes.instrumented(name = "ValidMetricLogger"))
 
     def runnableGraph =

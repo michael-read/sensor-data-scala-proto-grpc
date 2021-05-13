@@ -16,6 +16,10 @@ class InvalidMetricLogger extends AkkaStreamlet {
         system.log.warning(s"Invalid metric detected!!! $invalidMetric")
         invalidMetric
       }
+      /*
+            Note: if you don't currently have a Lightbend subscription you can optionally comment
+            out the following line referencing CinnamonAttributes and associated import above.
+       */
       .withAttributes(CinnamonAttributes.instrumented(name = "InvalidMetricLogger"))
 
     def runnableGraph =

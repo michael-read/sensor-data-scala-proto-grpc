@@ -2,7 +2,7 @@
 import sbt._
 import sbt.Keys.{watchSources, _}
 
-version in ThisBuild := "0.0.15"
+ThisBuild / version := "0.0.15"
 
 val credentialFile = new File("lightbend.sbt")
 
@@ -52,8 +52,8 @@ lazy val sensorData =  (project in file("."))
 
     // Add the Cinnamon Agent settings for run and test
     cinnamonSuppressRepoWarnings := true,
-    cinnamon in test := false,
-    cinnamon in run := true,
+    test / cinnamon := false,
+    run / cinnamon := true,
     cinnamonLogLevel := "INFO",
 
     libraryDependencies ++= {
@@ -82,8 +82,8 @@ lazy val sensorData =  (project in file("."))
     ),
 
 
-    scalacOptions in (Compile, console) --= Seq("-Ywarn-unused", "-Ywarn-unused-import"),
-    scalacOptions in (Test, console) := (scalacOptions in (Compile, console)).value
+    Compile / console / scalacOptions --= Seq("-Ywarn-unused", "-Ywarn-unused-import"),
+    Test / console / scalacOptions := (Compile / console / scalacOptions).value
 
   )
 
