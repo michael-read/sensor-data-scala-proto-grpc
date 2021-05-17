@@ -1,5 +1,5 @@
 ![Akka Data Pipelines](adp.png)
-# Akka Data Pipelines - Streaming Data Pipelines Simplified - Blog Intro
+# Akka Data Pipelines - Streaming Data Pipelines Simplified - Introduction
 
 For me, streaming data in motion is much more interesting than data at rest.
 
