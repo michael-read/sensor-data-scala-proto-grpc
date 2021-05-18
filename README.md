@@ -16,7 +16,7 @@ By leveraging Akka Data Pipelines from Lightbend, you can accelerate development
 - Monitoring the IoT PoC with Lightbend Telemetry and Console
 - Finally, we walk you through the code base of the sample application
 
-You can find the Akka Data Pipelines Tutorial [here](https://developer.lightbend.com/guides/akka-data-pipelines-iot-sensors-tutorial).
+You can find the Akka Data Pipelines Tutorial [here](https://developer.lightbend.com/guides/akka-data-pipelines-iot-sensor-tutorial/).
 
 ![Console Akka Data Pipelines](console.png)
 
