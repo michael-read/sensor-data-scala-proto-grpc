@@ -27,9 +27,12 @@ By leveraging [Akka Data Pipelines from Lightbend](https://developer.lightbend.c
 You can find the Akka Data Pipelines Tutorial [here](https://developer.lightbend.com/guides/akka-data-pipelines-iot-sensor-tutorial/).
 
 
+---
+# Update Notes
+- 2021, May 20 : Fix kafka-strimzi-microk8s.yaml, to use the new "beta2" API.  
 
 ---
-# Notes:
+# Other Notes:
 
 ## grpcurl
 https://github.com/fullstorydev/grpcurl
