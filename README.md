@@ -11,11 +11,11 @@ Building streaming pipelines to move data from one source to another—so it can
 
 To help get you started, we have a new [Akka Data Pipelines IoT Sensor Tutorial](https://developer.lightbend.com/guides/akka-data-pipelines-iot-sensor-tutorial/) to bring you with a hands-on coding experience.
 
-> In case you missed it, Akka Data Pipelines is the enterprise packaging of Lightbend's OSS Cloudflow project, which provides Lightbend Telemetry for insights into your running system as well as world-class support and guidance from the Lightbend engineering teams.
+> In case you missed it, [Akka Data Pipelines](https://www.lightbend.com/akka-data-pipelines) is the enterprise packaging of Lightbend's OSS Cloudflow project, which provides Lightbend Telemetry for insights into your running system as well as world-class support and guidance from the Lightbend engineering teams.
 
 ![Console Akka Data Pipelines](console.png)
 
-By leveraging [Akka Data Pipelines from Lightbend](https://developer.lightbend.com/guides/akka-data-pipelines-iot-sensor-tutorial/), you can accelerate development and decrease risks. To illustrate how we can help you build streaming systems faster and easier, this Akka Data Pipelines IoT Sensor Tutorial covers the following topics and domains:
+By leveraging [Akka Data Pipelines from Lightbend](https://www.lightbend.com/akka-data-pipelines), you can accelerate development and decrease risks. To illustrate how we can help you build streaming systems faster and easier, this [Akka Data Pipelines IoT Sensor Tutorial](https://developer.lightbend.com/guides/akka-data-pipelines-iot-sensor-tutorial/) covers the following topics and domains:
 
 - What is Akka Data Pipelines, and why you should care
 - Setting up a local Kubernetes test environment using MicroK8s
