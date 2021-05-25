@@ -29,7 +29,8 @@ You can find the Akka Data Pipelines Tutorial [here](https://developer.lightbend
 
 ---
 # Update Notes
-- 2021, May 20 : Fix kafka-strimzi-microk8s.yaml, to use the new "beta2" API.  
+- 2021, May 20 : Fix kafka-strimzi-microk8s.yaml, to use the new "beta2" API.
+- 2021, May 25 : Upgrade to Akka Data Pipelines to v2.1.2
 
 ---
 # Other Notes:
