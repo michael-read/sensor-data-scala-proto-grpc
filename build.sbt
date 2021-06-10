@@ -40,6 +40,22 @@ def ossDependencies : Seq[ModuleID] = {
   )
 }
 
+import cloudflow.sbt.CloudflowBasePlugin.DepJarsDir
+import com.typesafe.sbt.packager.Keys.stage
+
+val copyCinnamonAgentJar = taskKey[Unit]("Copy Cinnamon Agent jar with no version suffix")
+copyCinnamonAgentJar := {
+  val appDir: File     = stage.value
+  val depJarsDir: File = new File(appDir, DepJarsDir)
+
+  (Compile / update).value.allFiles.find(_.getName.contains("cinnamon-agent")).foreach { agentFile =>
+    IO.copyFile(agentFile, new File(depJarsDir, "cinnamon-agent.jar"))
+  }
+}
+
+// I'm not sure this is the best place to hook in the file copy
+docker / dockerfile := (docker / dockerfile).dependsOn(copyCinnamonAgentJar).value
+
 lazy val sensorData =  (project in file("."))
   .enablePlugins(CloudflowApplicationPlugin, CloudflowAkkaPlugin, ScalafmtPlugin)
   .enablePlugins(CloudflowLibraryPlugin)
