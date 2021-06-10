@@ -48,7 +48,7 @@ copyCinnamonAgentJar := {
   val appDir: File     = stage.value
   val depJarsDir: File = new File(appDir, DepJarsDir)
 
-  (Compile / update).value.allFiles.find(_.getName.contains("cinnamon-agent")).foreach { agentFile =>
+  (Compile / update).value.matching(moduleFilter(name = "cinnamon-agent")).head.foreach { agentFile =>
     IO.copyFile(agentFile, new File(depJarsDir, "cinnamon-agent.jar"))
   }
 }
