@@ -15,6 +15,7 @@ import sensordata.{SensorData, SensorDataReply, SensorDataServiceClient}
 
 import scala.collection._
 
+// tag::clientForEach[]
 object SensorDataClientForEach extends App {
 
     implicit val sys: ActorSystem[_] = ActorSystem(Behaviors.empty, "SensorDataClient")
@@ -57,3 +58,4 @@ object SensorDataClientForEach extends App {
     }
 
 }
+// end::clientForEach[]

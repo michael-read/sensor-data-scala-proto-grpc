@@ -8,6 +8,7 @@ import cloudflow.streamlets._
 import cloudflow.streamlets.proto._
 import com.lightbend.cinnamon.akka.stream.CinnamonAttributes
 
+// tag::validation[]
 class MetricsValidation extends AkkaStreamlet {
   val in = ProtoInlet[Metric]("in")
   val invalid = ProtoOutlet[InvalidMetric]("invalid")
@@ -29,8 +30,14 @@ class MetricsValidation extends AkkaStreamlet {
     def flow =
       FlowWithCommittableContext[Metric]
         .map { metric ⇒
-          if (!SensorDataUtils.isValidMetric(metric)) Left(InvalidMetric(Some(metric), "All measurements must be positive numbers!"))
-          else Right(metric)
+          if (!SensorDataUtils.isValidMetric(metric)) {
+            if (system.log.isDebugEnabled) {
+              system.log.debug(s"${metric.deviceId} ${metric.name} = ${metric.value} All metrics must be positive numbers")
+            } else {
+              system.log.info("debug is not enabled.")
+            }
+            Left(InvalidMetric(Some(metric), "All measurements must be positive numbers!"))
+          } else Right(metric)
         }
         /*
               Note: if you don't currently have a Lightbend subscription you can optionally comment
@@ -39,3 +46,4 @@ class MetricsValidation extends AkkaStreamlet {
         .withAttributes(CinnamonAttributes.instrumented(name = "MetricsValidation"))
   }
 }
+// end::validation[]

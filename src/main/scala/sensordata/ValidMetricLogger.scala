@@ -6,6 +6,7 @@ import cloudflow.streamlets._
 import cloudflow.streamlets.proto._
 import com.lightbend.cinnamon.akka.stream.CinnamonAttributes
 
+// tag::validMetric[]
 class ValidMetricLogger extends AkkaStreamlet {
 
   val inlet = ProtoInlet[Metric]("in")
@@ -53,4 +54,6 @@ class ValidMetricLogger extends AkkaStreamlet {
         .to(committableSink)
 
   }
+
 }
+// end::validMetric[]

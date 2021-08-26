@@ -6,6 +6,7 @@ import cloudflow.streamlets.{ RoundRobinPartitioner, StreamletShape }
 import cloudflow.streamlets.proto._
 import com.lightbend.cinnamon.akka.stream.CinnamonAttributes
 
+// tag::toMetrics[]
 class SensorDataToMetrics extends AkkaStreamlet {
   val in    = ProtoInlet[SensorData]("in")
   val out   = ProtoOutlet[Metric]("out").withPartitioner(RoundRobinPartitioner)
@@ -38,3 +39,4 @@ class SensorDataToMetrics extends AkkaStreamlet {
 
   }
 }
+// end::toMetrics[]
