@@ -1,5 +1,8 @@
 package sensordata
 
+import akka.NotUsed
+import akka.kafka.ConsumerMessage
+import akka.stream.scaladsl.{ FlowWithContext, RunnableGraph }
 import cloudflow.akkastream._
 import cloudflow.akkastream.scaladsl._
 import cloudflow.streamlets._
@@ -9,21 +12,21 @@ import com.lightbend.cinnamon.akka.stream.CinnamonAttributes
 // tag::validMetric[]
 class ValidMetricLogger extends AkkaStreamlet {
 
-  val inlet = ProtoInlet[Metric]("in")
-  val shape = StreamletShape.withInlets(inlet)
+  val inlet: ProtoInlet[Metric] = ProtoInlet[Metric]("in")
+  val shape: StreamletShape     = StreamletShape.withInlets(inlet)
 
-  val LogLevel = RegExpConfigParameter(
+  val LogLevel: RegExpConfigParameter = RegExpConfigParameter(
     "log-level",
     "Provide one of the following log levels, debug, info, warning or error",
     "^debug|info|warning|error$",
     Some("info")
   )
 
-  val MsgPrefix = StringConfigParameter("msg-prefix", "Provide a prefix for the log lines", Some("valid-logger"))
+  val MsgPrefix: StringConfigParameter = StringConfigParameter("msg-prefix", "Provide a prefix for the log lines", Some("valid-logger"))
 
   override def configParameters = Vector(LogLevel, MsgPrefix)
 
-  override def createLogic = new RunnableGraphStreamletLogic() {
+  override def createLogic: RunnableGraphStreamletLogic = new RunnableGraphStreamletLogic() {
     val logF: String ⇒ Unit = LogLevel.value.toLowerCase match {
       case "debug"   ⇒ system.log.debug _
       case "info"    ⇒ system.log.info _
@@ -31,12 +34,12 @@ class ValidMetricLogger extends AkkaStreamlet {
       case "error"   ⇒ system.log.error _
     }
 
-    val msgPrefix = MsgPrefix.value
+    val msgPrefix: String = MsgPrefix.value
 
-    def log(metric: Metric) =
+    def log(metric: Metric): Unit =
       logF(s"$msgPrefix $metric")
 
-    def flow =
+    def flow: FlowWithContext[Metric, ConsumerMessage.Committable, Metric, ConsumerMessage.Committable, NotUsed] =
       FlowWithCommittableContext[Metric]
         .map { validMetric ⇒
           log(validMetric)
@@ -48,7 +51,7 @@ class ValidMetricLogger extends AkkaStreamlet {
          */
         .withAttributes(CinnamonAttributes.instrumented(name = "ValidMetricLogger"))
 
-    def runnableGraph =
+    def runnableGraph: RunnableGraph[_] =
       sourceWithCommittableContext(inlet)
         .via(flow)
         .to(committableSink)

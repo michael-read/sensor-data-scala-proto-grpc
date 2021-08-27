@@ -1,5 +1,9 @@
 package sensordata
 
+import akka.NotUsed
+import akka.kafka.ConsumerMessage
+import akka.stream.scaladsl.{ FlowWithContext, RunnableGraph }
+
 import java.util.UUID
 import cloudflow.akkastream._
 import cloudflow.akkastream.scaladsl._
@@ -10,8 +14,8 @@ import com.lightbend.cinnamon.akka.stream.CinnamonAttributes
 
 // tag::validation[]
 class MetricsValidation extends AkkaStreamlet {
-  val in = ProtoInlet[Metric]("in")
-  val invalid = ProtoOutlet[InvalidMetric]("invalid")
+  val in: ProtoInlet[Metric] = ProtoInlet[Metric]("in")
+  val invalid: ProtoOutlet[InvalidMetric] = ProtoOutlet[InvalidMetric]("invalid")
     .withPartitioner(invalidMetric ⇒
       invalidMetric.metric match {
         case Some(metric) => metric.deviceId
@@ -19,15 +23,15 @@ class MetricsValidation extends AkkaStreamlet {
         case None => UUID.randomUUID().toString
       }
     )
-  val valid = ProtoOutlet[Metric]("valid").withPartitioner(RoundRobinPartitioner)
-  val shape = StreamletShape(in).withOutlets(invalid, valid)
+  val valid: ProtoOutlet[Metric] = ProtoOutlet[Metric]("valid").withPartitioner(RoundRobinPartitioner)
+  val shape: StreamletShape = StreamletShape(in).withOutlets(invalid, valid)
 
-  override def createLogic = new RunnableGraphStreamletLogic() {
-    def runnableGraph =
+  override def createLogic: AkkaStreamletLogic = new RunnableGraphStreamletLogic() {
+    def runnableGraph: RunnableGraph[_] =
       sourceWithCommittableContext(in)
         .to(Splitter.sink(flow, invalid, valid))
 
-    def flow =
+    def flow: FlowWithContext[Metric, ConsumerMessage.Committable, Either[InvalidMetric, Metric], ConsumerMessage.Committable, NotUsed] =
       FlowWithCommittableContext[Metric]
         .map { metric ⇒
           if (!SensorDataUtils.isValidMetric(metric)) {
