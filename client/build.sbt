@@ -6,7 +6,7 @@ scalaVersion := "2.13.2"
 
 lazy val akkaVersion = "2.6.10"
 lazy val akkaHttpVersion = "10.2.0"
-lazy val akkaGrpcVersion = "1.0.2"
+lazy val akkaGrpcVersion = "2.0.0"
 
 enablePlugins(AkkaGrpcPlugin)
 
@@ -26,4 +26,4 @@ libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.1.1" % Test
 )
 
-fork in run := true
+run / fork := true

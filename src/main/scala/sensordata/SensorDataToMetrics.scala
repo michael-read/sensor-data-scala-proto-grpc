@@ -1,16 +1,20 @@
 package sensordata
 
+import akka.NotUsed
+import akka.kafka.ConsumerMessage
+import akka.stream.scaladsl.{ FlowWithContext, RunnableGraph }
 import cloudflow.akkastream._
 import cloudflow.akkastream.scaladsl._
 import cloudflow.streamlets.{ RoundRobinPartitioner, StreamletShape }
 import cloudflow.streamlets.proto._
 import com.lightbend.cinnamon.akka.stream.CinnamonAttributes
 
+// tag::toMetrics[]
 class SensorDataToMetrics extends AkkaStreamlet {
-  val in    = ProtoInlet[SensorData]("in")
-  val out   = ProtoOutlet[Metric]("out").withPartitioner(RoundRobinPartitioner)
-  val shape = StreamletShape(in, out)
-  def flow =
+  val in: ProtoInlet[SensorData] = ProtoInlet[SensorData]("in")
+  val out: ProtoOutlet[Metric]   = ProtoOutlet[Metric]("out").withPartitioner(RoundRobinPartitioner)
+  val shape: StreamletShape      = StreamletShape(in, out)
+  def flow: FlowWithContext[SensorData, ConsumerMessage.Committable, Metric, ConsumerMessage.Committable, NotUsed] =
     FlowWithCommittableContext[SensorData]
       .mapConcat { data ⇒
         data.measurements match {
@@ -30,11 +34,12 @@ class SensorDataToMetrics extends AkkaStreamlet {
        */
       .withAttributes(CinnamonAttributes.instrumented(name = "SensorDataToMetrics"))
 
-  override def createLogic = new RunnableGraphStreamletLogic() {
-    def runnableGraph =
+  override def createLogic: RunnableGraphStreamletLogic = new RunnableGraphStreamletLogic() {
+    def runnableGraph: RunnableGraph[_] =
       sourceWithCommittableContext(in)
         .via(flow)
         .to(committableSink(out))
 
   }
 }
+// end::toMetrics[]

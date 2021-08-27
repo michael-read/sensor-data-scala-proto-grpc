@@ -7,6 +7,7 @@ import cloudflow.akkastream.WritableSinkRef
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
+// tag::ingressImpl[]
 class SensorDataIngressImpl(outlet: WritableSinkRef[SensorData]) extends SensorDataService {
 
   /**
@@ -39,3 +40,4 @@ class SensorDataIngressImpl(outlet: WritableSinkRef[SensorData]) extends SensorD
         }
     }
 }
+// end::ingressImpl[]

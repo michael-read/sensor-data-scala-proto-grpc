@@ -12,6 +12,7 @@ import scala.collection.mutable.ListBuffer
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
+// tag::clientStream[]
 object SensorDataClientStream extends App {
 
     implicit val sys: ActorSystem[_] = ActorSystem(Behaviors.empty, "SensorDataClient")
@@ -64,4 +65,6 @@ object SensorDataClientStream extends App {
                 System.exit(0)
         }
     }
+
 }
+// end::clientStream[]

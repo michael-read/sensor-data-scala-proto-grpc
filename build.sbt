@@ -2,7 +2,8 @@
 import sbt._
 import sbt.Keys.{watchSources, _}
 
-ThisBuild / version := "0.0.16"
+ThisBuild / version := "0.0.17"
+ThisBuild / evictionErrorLevel := Level.Info
 
 val credentialFile = new File("lightbend.sbt")
 
@@ -32,10 +33,9 @@ def commercialDependencies : Seq[ModuleID] = {
 
 def ossDependencies : Seq[ModuleID] = {
   Seq(
-    "com.lightbend.akka"     %% "akka-stream-alpakka-file"  % "1.1.2",
-    "com.thesamet.scalapb"   %% "scalapb-json4s"            % "0.10.1",
+    "com.thesamet.scalapb"   %% "scalapb-json4s"            % "0.11.0",
     "ch.qos.logback"         %  "logback-classic"           % "1.2.3",
-    "com.typesafe.akka"      %% "akka-http-testkit"         % "10.1.12" % "test",
+    "com.typesafe.akka"      %% "akka-http-testkit"         % "10.2.6" % "test",
     "org.scalatest"          %% "scalatest"                 % "3.0.8"  % "test"
   )
 }
@@ -45,7 +45,7 @@ lazy val sensorData =  (project in file("."))
   .enablePlugins(CloudflowLibraryPlugin)
   .enablePlugins(Cinnamon)
   .settings(
-    scalaVersion := "2.12.11",
+    scalaVersion := "2.12.12",
     runLocalConfigFile := Some("src/main/resources/local.conf"),
     scalafmtOnCompile := true,
     name := "sensor-data-scala-proto-grpc",
