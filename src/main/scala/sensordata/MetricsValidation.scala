@@ -24,7 +24,7 @@ class MetricsValidation extends AkkaStreamlet {
       }
     )
   val valid: ProtoOutlet[Metric] = ProtoOutlet[Metric]("valid").withPartitioner(RoundRobinPartitioner)
-  val shape: StreamletShape = StreamletShape(in).withOutlets(invalid, valid)
+  val shape: StreamletShape      = StreamletShape(in).withOutlets(invalid, valid)
 
   override def createLogic: AkkaStreamletLogic = new RunnableGraphStreamletLogic() {
     def runnableGraph: RunnableGraph[_] =
