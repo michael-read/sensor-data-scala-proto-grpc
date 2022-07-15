@@ -2,11 +2,11 @@ name := "sensor-data-scala-grpc-client"
 
 version := "1.0"
 
-scalaVersion := "2.13.2"
+scalaVersion := "2.13.8"
 
-lazy val akkaVersion = "2.6.10"
-lazy val akkaHttpVersion = "10.2.0"
-lazy val akkaGrpcVersion = "2.0.0"
+lazy val akkaVersion = "2.6.19"
+lazy val akkaHttpVersion = "10.2.9"
+lazy val akkaGrpcVersion = "2.1.4"
 
 enablePlugins(AkkaGrpcPlugin)
 

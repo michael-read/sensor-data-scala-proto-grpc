@@ -5,9 +5,11 @@ metadata:
   namespace: cloudflow
 spec:
   kafka:
+    version: 3.0.0
     config:
       auto.create.topics.enable: false
-      log.message.format.version: "2.3"
+      log.message.format.version: "3.0"
+      inter.broker.protocol.version: "3.0"
       log.retention.bytes: 1073741824
       log.retention.hours: 1
       log.retention.check.interval.ms: 300000
@@ -35,7 +37,6 @@ spec:
       deleteClaim: false
       size: 5Gi
       type: persistent-claim
-    version: 2.8.0
   zookeeper:
     livenessProbe:
       initialDelaySeconds: 15

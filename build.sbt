@@ -2,7 +2,7 @@
 import sbt._
 import sbt.Keys.{watchSources, _}
 
-ThisBuild / version := "0.0.17"
+ThisBuild / version := "0.0.18"
 //ThisBuild / evictionErrorLevel := Level.Info
 
 val credentialFile = new File("lightbend.sbt")
@@ -33,9 +33,9 @@ def commercialDependencies : Seq[ModuleID] = {
 
 def ossDependencies : Seq[ModuleID] = {
   Seq(
-    "com.thesamet.scalapb"   %% "scalapb-json4s"            % "0.11.0",
+    "com.thesamet.scalapb"   %% "scalapb-json4s"            % "0.12.0",
     "ch.qos.logback"         %  "logback-classic"           % "1.2.3",
-    "com.typesafe.akka"      %% "akka-http-testkit"         % "10.2.6" % "test",
+    "com.typesafe.akka"      %% "akka-http-testkit"         % "10.2.9" % "test",
     "org.scalatest"          %% "scalatest"                 % "3.0.8"  % "test"
   )
 }
@@ -44,8 +44,9 @@ lazy val sensorData =  (project in file("."))
   .enablePlugins(CloudflowApplicationPlugin, CloudflowAkkaPlugin, ScalafmtPlugin)
   .enablePlugins(CloudflowLibraryPlugin)
   .enablePlugins(Cinnamon)
+//  .enablePlugins(AkkaGrpcPlugin)
   .settings(
-    scalaVersion := "2.12.12",
+    scalaVersion := "2.13.8",
     runLocalConfigFile := Some("src/main/resources/local.conf"),
     scalafmtOnCompile := true,
     name := "sensor-data-scala-proto-grpc",
@@ -74,7 +75,7 @@ lazy val sensorData =  (project in file("."))
       "-Xlog-reflective-calls",
       "-Xlint",
       "-Ywarn-unused",
-      "-Ywarn-unused-import",
+//      "-Ywarn-unused-import",
       "-deprecation",
       "-feature",
       "-language:_",
