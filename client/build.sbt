@@ -19,7 +19,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http" % akkaHttpVersion,
   "com.typesafe.akka" %% "akka-http2-support" % akkaHttpVersion,
 
-  "com.thesamet.scalapb"   %% "scalapb-json4s" % "0.10.1",
+  "com.thesamet.scalapb"   %% "scalapb-json4s" % "0.11.1",
 
   "com.typesafe.akka" %% "akka-actor-testkit-typed" % akkaVersion % Test,
   "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test,

@@ -2,9 +2,14 @@
 import sbt._
 import sbt.Keys.{watchSources, _}
 
-ThisBuild / version := "0.0.18"
-//ThisBuild / evictionErrorLevel := Level.Info
+lazy val cloudFlowVersion = "2.3.1"
+lazy val akkaGrpcVersion = "2.1.4"
 
+ThisBuild / scalaVersion := "2.13.8"
+ThisBuild / scalacOptions += "-deprecation"
+
+ThisBuild / version := "0.0.18"
+ThisBuild / evictionErrorLevel := Level.Info
 val credentialFile = new File("lightbend.sbt")
 
 def doesCredentialExist : Boolean = {
@@ -33,8 +38,8 @@ def commercialDependencies : Seq[ModuleID] = {
 
 def ossDependencies : Seq[ModuleID] = {
   Seq(
-    "com.thesamet.scalapb"   %% "scalapb-json4s"            % "0.12.0",
     "ch.qos.logback"         %  "logback-classic"           % "1.2.3",
+    "com.lightbend.cloudflow" %% "cloudflow-proto"          % cloudFlowVersion,
     "com.typesafe.akka"      %% "akka-http-testkit"         % "10.2.9" % "test",
     "org.scalatest"          %% "scalatest"                 % "3.0.8"  % "test"
   )
@@ -44,7 +49,6 @@ lazy val sensorData =  (project in file("."))
   .enablePlugins(CloudflowApplicationPlugin, CloudflowAkkaPlugin, ScalafmtPlugin)
   .enablePlugins(CloudflowLibraryPlugin)
   .enablePlugins(Cinnamon)
-//  .enablePlugins(AkkaGrpcPlugin)
   .settings(
     scalaVersion := "2.13.8",
     runLocalConfigFile := Some("src/main/resources/local.conf"),
