@@ -14,10 +14,10 @@ class InvalidMetricLogger extends AkkaStreamlet {
   val inlet: ProtoInlet[InvalidMetric] = ProtoInlet[InvalidMetric]("in")
   val shape: StreamletShape            = StreamletShape.withInlets(inlet)
 
-  override def createLogic: RunnableGraphStreamletLogic = new RunnableGraphStreamletLogic() {
+  override def createLogic(): RunnableGraphStreamletLogic = new RunnableGraphStreamletLogic() {
     val flow: FlowWithContext[InvalidMetric, ConsumerMessage.Committable, InvalidMetric, ConsumerMessage.Committable, NotUsed] =
-      FlowWithCommittableContext[InvalidMetric]
-        .map { invalidMetric ⇒
+      FlowWithCommittableContext[InvalidMetric]()
+        .map { invalidMetric =>
           system.log.warning(s"Invalid metric detected!!! $invalidMetric")
           invalidMetric
         }
@@ -27,7 +27,7 @@ class InvalidMetricLogger extends AkkaStreamlet {
          */
         .withAttributes(CinnamonAttributes.instrumented(name = "InvalidMetricLogger"))
 
-    def runnableGraph: RunnableGraph[_] =
+    def runnableGraph(): RunnableGraph[_] =
       sourceWithCommittableContext(inlet)
         .via(flow)
         .to(committableSink)

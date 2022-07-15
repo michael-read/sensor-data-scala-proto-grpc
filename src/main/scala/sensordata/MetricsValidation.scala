@@ -16,7 +16,7 @@ import com.lightbend.cinnamon.akka.stream.CinnamonAttributes
 class MetricsValidation extends AkkaStreamlet {
   val in: ProtoInlet[Metric] = ProtoInlet[Metric]("in")
   val invalid: ProtoOutlet[InvalidMetric] = ProtoOutlet[InvalidMetric]("invalid")
-    .withPartitioner(invalidMetric ⇒
+    .withPartitioner(invalidMetric =>
       invalidMetric.metric match {
         case Some(metric) => metric.deviceId
         // this shouldn't happen, but just in case create a UUID
