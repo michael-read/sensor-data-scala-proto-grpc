@@ -26,14 +26,14 @@ class MetricsValidation extends AkkaStreamlet {
   val valid: ProtoOutlet[Metric] = ProtoOutlet[Metric]("valid").withPartitioner(RoundRobinPartitioner)
   val shape: StreamletShape      = StreamletShape(in).withOutlets(invalid, valid)
 
-  override def createLogic: AkkaStreamletLogic = new RunnableGraphStreamletLogic() {
-    def runnableGraph: RunnableGraph[_] =
+  override def createLogic(): AkkaStreamletLogic = new RunnableGraphStreamletLogic() {
+    def runnableGraph(): RunnableGraph[_] =
       sourceWithCommittableContext(in)
         .to(Splitter.sink(flow, invalid, valid))
 
     def flow: FlowWithContext[Metric, ConsumerMessage.Committable, Either[InvalidMetric, Metric], ConsumerMessage.Committable, NotUsed] =
-      FlowWithCommittableContext[Metric]
-        .map { metric ⇒
+      FlowWithCommittableContext[Metric]()
+        .map { metric =>
           if (!SensorDataUtils.isValidMetric(metric)) {
             if (system.log.isDebugEnabled) {
               system.log.debug(s"${metric.deviceId} ${metric.name} = ${metric.value} All metrics must be positive numbers")

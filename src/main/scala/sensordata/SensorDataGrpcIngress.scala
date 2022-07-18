@@ -9,9 +9,9 @@ import cloudflow.streamlets.proto._
 // tag::ingress[]
 class SensorDataGrpcIngress extends AkkaServerStreamlet {
   val out: ProtoOutlet[SensorData] = ProtoOutlet[SensorData]("out").withPartitioner(RoundRobinPartitioner)
-  def shape: StreamletShape        = StreamletShape.withOutlets(out)
+  def shape(): StreamletShape      = StreamletShape.withOutlets(out)
 
-  override def createLogic: GrpcServerLogic = new GrpcServerLogic(this) {
+  override def createLogic(): GrpcServerLogic = new GrpcServerLogic(this) {
     override def handlers() =
       List(SensorDataServiceHandler.partial(new SensorDataIngressImpl(sinkRef(out))), ServerReflection.partial(List(SensorDataService)))
   }

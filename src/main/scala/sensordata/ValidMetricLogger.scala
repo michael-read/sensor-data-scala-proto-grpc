@@ -26,7 +26,7 @@ class ValidMetricLogger extends AkkaStreamlet {
 
   override def configParameters = Vector(LogLevel, MsgPrefix)
 
-  override def createLogic: RunnableGraphStreamletLogic = new RunnableGraphStreamletLogic() {
+  override def createLogic(): RunnableGraphStreamletLogic = new RunnableGraphStreamletLogic() {
     val logF: String => Unit = LogLevel.value.toLowerCase match {
       case "debug"   => system.log.debug _
       case "info"    => system.log.info _
@@ -39,8 +39,8 @@ class ValidMetricLogger extends AkkaStreamlet {
     def log(metric: Metric): Unit =
       logF(s"$msgPrefix $metric")
 
-    def flow: FlowWithContext[Metric, ConsumerMessage.Committable, Metric, ConsumerMessage.Committable, NotUsed] =
-      FlowWithCommittableContext[Metric]
+    def flow(): FlowWithContext[Metric, ConsumerMessage.Committable, Metric, ConsumerMessage.Committable, NotUsed] =
+      FlowWithCommittableContext[Metric]()
         .map { validMetric =>
           log(validMetric)
           validMetric
@@ -51,9 +51,9 @@ class ValidMetricLogger extends AkkaStreamlet {
          */
         .withAttributes(CinnamonAttributes.instrumented(name = "ValidMetricLogger"))
 
-    def runnableGraph: RunnableGraph[_] =
+    def runnableGraph(): RunnableGraph[_] =
       sourceWithCommittableContext(inlet)
-        .via(flow)
+        .via(flow())
         .to(committableSink)
 
   }

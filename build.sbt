@@ -3,8 +3,6 @@ import sbt._
 import sbt.Keys.{watchSources, _}
 
 lazy val cloudFlowVersion = "2.3.1"
-lazy val akkaGrpcVersion = "2.1.4"
-lazy val scalaPBVersion = "0.11.11"
 
 ThisBuild / scalaVersion := "2.13.8"
 ThisBuild / scalacOptions += "-deprecation"
@@ -39,9 +37,6 @@ def commercialDependencies : Seq[ModuleID] = {
 
 def ossDependencies : Seq[ModuleID] = {
   Seq(
-    "com.thesamet.scalapb"    %% "compilerplugin"           % scalaPBVersion,
-    "com.thesamet.scalapb"    %% "lenses"                   % scalaPBVersion,
-    "com.thesamet.scalapb"    %% "scalapb-runtime"          % scalaPBVersion,
     "ch.qos.logback"         %  "logback-classic"           % "1.2.3",
     "com.lightbend.cloudflow" %% "cloudflow-proto"          % cloudFlowVersion,
     "com.typesafe.akka"      %% "akka-http-testkit"         % "10.2.9" % "test",

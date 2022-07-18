@@ -14,9 +14,9 @@ class SensorDataToMetrics extends AkkaStreamlet {
   val in: ProtoInlet[SensorData] = ProtoInlet[SensorData]("in")
   val out: ProtoOutlet[Metric]   = ProtoOutlet[Metric]("out").withPartitioner(RoundRobinPartitioner)
   val shape: StreamletShape      = StreamletShape(in, out)
-  def flow: FlowWithContext[SensorData, ConsumerMessage.Committable, Metric, ConsumerMessage.Committable, NotUsed] =
-    FlowWithCommittableContext[SensorData]
-      .mapConcat { data ⇒
+  def flow(): FlowWithContext[SensorData, ConsumerMessage.Committable, Metric, ConsumerMessage.Committable, NotUsed] =
+    FlowWithCommittableContext[SensorData]()
+      .mapConcat { data =>
         data.measurements match {
           case Some(measurements) =>
             List(
@@ -34,10 +34,10 @@ class SensorDataToMetrics extends AkkaStreamlet {
        */
       .withAttributes(CinnamonAttributes.instrumented(name = "SensorDataToMetrics"))
 
-  override def createLogic: RunnableGraphStreamletLogic = new RunnableGraphStreamletLogic() {
-    def runnableGraph: RunnableGraph[_] =
+  override def createLogic(): RunnableGraphStreamletLogic = new RunnableGraphStreamletLogic() {
+    def runnableGraph(): RunnableGraph[_] =
       sourceWithCommittableContext(in)
-        .via(flow)
+        .via(flow())
         .to(committableSink(out))
 
   }
