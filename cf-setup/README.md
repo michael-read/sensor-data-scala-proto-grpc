@@ -4,11 +4,11 @@
 
 helm install cloudflow cloudflow-helm-charts/cloudflow --namespace cloudflow \
   --set kafkaClusters.default.bootstrapServers=cloudflow-strimzi-kafka-bootstrap.cloudflow:9092 \
-  --set kafkaClusters.default.replicas=1 --version "2.1.2"
+  --set kafkaClusters.default.replicas=1 --version "2.3.1"
 
 helm upgrade cloudflow cloudflow-helm-charts/cloudflow --namespace cloudflow \
   --set kafkaClusters.default.bootstrapServers=cloudflow-strimzi-kafka-bootstrap.cloudflow:9092 \
-  --set kafkaClusters.default.replicas=1 --version "2.1.2"
+  --set kafkaClusters.default.replicas=1 --version "2.3.1"
 
 ## Deployment 
 cat my-dockerhub-password.txt | kubectl cloudflow deploy ../target/sensor-data-scala-proto-grpc.json -u <dockerhub-username> --password-stdin

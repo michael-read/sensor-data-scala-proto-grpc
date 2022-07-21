@@ -7,7 +7,7 @@ lazy val cloudFlowVersion = "2.3.1"
 ThisBuild / scalaVersion := "2.13.8"
 ThisBuild / scalacOptions += "-deprecation"
 
-ThisBuild / version := "0.0.18"
+ThisBuild / version := "0.0.21"
 ThisBuild / evictionErrorLevel := Level.Info
 val credentialFile = new File("lightbend.sbt")
 

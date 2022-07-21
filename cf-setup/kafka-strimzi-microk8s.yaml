@@ -5,11 +5,11 @@ metadata:
   namespace: cloudflow
 spec:
   kafka:
-    version: 3.0.0
+    version: 3.2.0
     config:
       auto.create.topics.enable: false
-      log.message.format.version: "3.0"
-      inter.broker.protocol.version: "3.0"
+      log.message.format.version: "3.2"
+      inter.broker.protocol.version: "3.2"
       log.retention.bytes: 1073741824
       log.retention.hours: 1
       log.retention.check.interval.ms: 300000
