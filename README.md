@@ -29,6 +29,7 @@ You can find the Akka Data Pipelines Tutorial [here](https://developer.lightbend
 
 ---
 # Update Notes
+- 2022, July 22 : Upgrade Cloudflow to 2.3.1, and Kafka to 3.2
 - 2021, July 1 : Upgrade Kafka to 2.8.0 with Strimzi
 - 2021, June 30 : Provided a [Java Reposistory](https://github.com/michael-read/sensor-data-java-proto-grpc) of this project. It's a work in progress.
 - 2021, May 25 : Upgrade to Akka Data Pipelines to v2.1.2
