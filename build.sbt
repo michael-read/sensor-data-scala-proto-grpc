@@ -1,13 +1,10 @@
-
 import sbt._
 import sbt.Keys.{watchSources, _}
-
-lazy val cloudFlowVersion = "2.3.1"
 
 ThisBuild / scalaVersion := "2.13.8"
 ThisBuild / scalacOptions += "-deprecation"
 
-ThisBuild / version := "0.0.21"
+ThisBuild / version := "0.0.22"
 ThisBuild / evictionErrorLevel := Level.Info
 val credentialFile = new File("lightbend.sbt")
 
@@ -37,10 +34,10 @@ def commercialDependencies : Seq[ModuleID] = {
 
 def ossDependencies : Seq[ModuleID] = {
   Seq(
-    "ch.qos.logback"         %  "logback-classic"           % "1.2.3",
-    "com.lightbend.cloudflow" %% "cloudflow-proto"          % cloudFlowVersion,
+    "ch.qos.logback"         %  "logback-classic"           % "1.2.11",
+    Cloudflow.library.CloudflowProto, // if Maven: "com.lightbend.cloudflow" %% "cloudflow-proto" % cloudFlowVersion,
     "com.typesafe.akka"      %% "akka-http-testkit"         % "10.2.9" % "test",
-    "org.scalatest"          %% "scalatest"                 % "3.0.8"  % "test"
+    "org.scalatest"          %% "scalatest"                 % "3.2.12"  % "test"
   )
 }
 
@@ -54,6 +51,8 @@ lazy val sensorData =  (project in file("."))
     runLocalConfigFile := Some("src/main/resources/local.conf"),
     scalafmtOnCompile := true,
     name := "sensor-data-scala-proto-grpc",
+    // specifying the platform in the base image solves problems if you're running an M1 chip
+    cloudflowDockerBaseImage := "--platform=linux/amd64 adoptopenjdk/openjdk11:alpine",
 
     // Add the Cinnamon Agent settings for run and test
     cinnamonSuppressRepoWarnings := true,
@@ -85,7 +84,6 @@ lazy val sensorData =  (project in file("."))
       "-language:_",
       "-unchecked"
     ),
-
 
     Compile / console / scalacOptions --= Seq("-Ywarn-unused", "-Ywarn-unused-import"),
     Test / console / scalacOptions := (Compile / console / scalacOptions).value
